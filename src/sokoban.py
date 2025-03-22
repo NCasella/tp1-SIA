@@ -10,8 +10,8 @@ class BlockType(Enum):
 
 class Sokoban(Problem):
     def __init__(self, initial_state, goal_state):
-        super().__init__(initial_state, goal_state)
+        super().__init__(initial_state=initial_state,goal_state= goal_state)
 
-    def get_actions(current_state):
-        return super().get_actions()
+    def get_actions(self,state):
+        return super().get_actions(state=state)
     

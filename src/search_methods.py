@@ -8,13 +8,13 @@ def depth_limited_search(problem:Problem,limit:int)-> tuple[bool,deque|str]:
     """devuelve tupla con resultado de busqueda. si primer valor es true devuelve cola, sino, devuelve razon de fallo"""
     return _recursive_depth_limited_search(node=problem.initial_state, limit=limit)
 
-def _recursive_depth_limited_search(node:Node,problem:Problem,limit:int) -> tuple[bool,deque]:
+def _recursive_depth_limited_search(node:Node,problem:Problem,limit:int) -> tuple[bool,deque|str]:
     if problem.is_goal_state(node.state):
         return (True,node.get_action_sequence())
     if limit==0:
         return (False,_LIMIT_REACHED_STRING)
     reached_limit=False
-    for action in problem.get_actions(node.state):
+    for action in problem.get_actions(state=node.state):
         child=node.generate_child_node(problem=problem,action=action)
         result=_recursive_depth_limited_search(node=child,problem=problem,limit=limit-1)
         reached_limit=result[1]==_LIMIT_REACHED_STRING
