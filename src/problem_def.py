@@ -33,7 +33,7 @@ class Node:
         self.cost=cost
         self.action=action
 
-    def get_action_sequence(self):
+    def get_action_sequence_to_root(self):
         action_sequence=deque()
         node=self
         while(node is not None):
@@ -41,15 +41,16 @@ class Node:
             node=node.parent
         return action_sequence
     
-    def __hash__(self):
-        return hash((self.parent,self.state))
-    
-    def __eq__(self, value):
-        return isinstance(Node,value) and self.parent == value.parent and self.state==value.state
 
     def generate_child_node(self,problem:Problem, action):
         state=problem.get_state_result(current_state=self.state,action=action)
         cost=self.cost+problem.get_cost_to_state(self.state,action,state)
         return Node(state=state,parent=self,action=action,cost=cost)
+    
+    def __hash__(self):
+        return hash((self.parent,self.state))
+    
+    def __eq__(self, value):
+        return isinstance(Node,value) and self.parent == value.parent and self.state==value.state
 
 
