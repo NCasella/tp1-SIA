@@ -8,8 +8,9 @@ _LIMIT_REACHED_STRING="Limit reached"
 _NO_SOLUTION_FOUND_STRING="No solution present"
 
 def depth_limited_search(problem:Problem,limit:int) -> tuple[bool,deque|str]:
-    """devuelve tupla con resultado de busqueda. si primer valor es true devuelve cola, sino, devuelve razon de fallo"""
-    return _recursive_depth_limited_search(node=problem.initial_state, limit=limit)
+    root_node:Node=Node(state=problem.initial_state)
+    """Devuelve tupla con resultado de busqueda. si primer valor es true, el segundo valor devuelve cola de secuencia de acciones, sino, devuelve razon de fallo"""
+    return _recursive_depth_limited_search(node=root_node, limit=limit)
 
 def _recursive_depth_limited_search(node:Node,problem:Problem,limit:int) -> tuple[bool,deque|str]:
     if problem.is_goal_state(node.state):
