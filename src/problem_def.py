@@ -10,9 +10,9 @@ class Problem(ABC):
 
     @abstractmethod
     def get_state_result(self,state,action):
-        """estado resultante de aplicar action state"""
+        """estado resultante de aplicar action a state"""
         #TODO cada uno de los problemas
-        
+
     @abstractmethod
     def get_actions(self,state):
         """todas las acciones disponibles en state"""
@@ -34,23 +34,23 @@ class Node:
         self.action=action
 
     def get_action_sequence_to_root(self):
+        """Devuelve la secuencia de acciones para llegar a la solucion del estado del nodo"""
         action_sequence=deque()
         node=self
         while(node is not None):
             action_sequence.appendleft(node.action)
             node=node.parent
         return action_sequence
-    
+
 
     def generate_child_node(self,problem:Problem, action):
+        """Expande el nodo, generando un nodo hijo, aplicando action """
         state=problem.get_state_result(current_state=self.state,action=action)
         cost=self.cost+problem.get_cost_to_state(self.state,action,state)
         return Node(state=state,parent=self,action=action,cost=cost)
-    
+
     def __hash__(self):
         return hash((self.parent,self.state))
-    
+
     def __eq__(self, value):
         return isinstance(Node,value) and self.parent == value.parent and self.state==value.state
-
-
