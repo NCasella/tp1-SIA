@@ -38,7 +38,7 @@ def _general_search(problem:Problem,limit:int,collection:Iterable) -> Result:
             if child.state not in explored_states and child not in fr:
                 if problem.is_goal_state(child.state):
                     end_time=time.time()
-                    return Result(success=True,result_cost=child.cost,solution=child.get_action_sequence_to_root(),processing_time=end_time-start_time)
+                    return Result(success=True,result_cost=child.cost,nodes_frontier=len(fr),solution=child.get_action_sequence_to_root(),processing_time=end_time-start_time)
                 fr.append(child)
         limit-=1
     end_time=time.time()
