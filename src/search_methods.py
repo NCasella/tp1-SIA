@@ -17,7 +17,7 @@ def limited_depth_first_search(problem:Problem,limit:int) -> Result:#STACK
 def breath_first_search(problem:Problem) -> Result:#COLA
     return _general_search(problem=problem,limit=math.inf,collection=deque())
 
-def _general_search(problem:Problem,limit:int,collection:Iterable) -> Result:
+def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node]) -> Result:
     start_time=time.time()
     node:Node=Node(problem.initial_state)
     if problem.is_goal_state(node.state):
