@@ -1,18 +1,19 @@
 from problem_def import *
 from collections import deque
+import time
 from _collections_abc import Callable
 from sortedcontainers.sortedlist import SortedList
 from functools import cmp_to_key
-
+from result import Result
 _LIMIT_REACHED_STRING="Limit reached"
 _NO_SOLUTION_FOUND_STRING="No solution present"
 
-def depth_limited_search(problem:Problem,limit:int) -> tuple[bool,deque|str]:
+def depth_limited_search(problem:Problem,limit:int) -> Result:
     root_node:Node=Node(state=problem.initial_state)
     """Devuelve tupla con resultado de busqueda. si primer valor es true, el segundo valor devuelve cola de secuencia de acciones, sino, devuelve razon de fallo"""
     return _recursive_depth_limited_search(node=root_node, limit=limit)
 
-def _recursive_depth_limited_search(node:Node,problem:Problem,limit:int) -> tuple[bool,deque|str]:
+def _recursive_depth_limited_search(node:Node,problem:Problem,limit:int) -> Result:
     if problem.is_goal_state(node.state):
         return (True,node.get_action_sequence_to_root())
     if limit==0:
@@ -26,24 +27,48 @@ def _recursive_depth_limited_search(node:Node,problem:Problem,limit:int) -> tupl
             return result
     return (False,_LIMIT_REACHED_STRING) if reached_limit else (False,_NO_SOLUTION_FOUND_STRING)
 
-def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> deque:
-    def compare_nodes(node1,node2):
+def breath_first_search(problem:Problem) -> Result:
+    start_time=time.time()
+    node:Node=Node(problem.initial_state)
+    fr=deque()
+    fr.append(node)
+    if problem.is_goal_state(node.state):
+        end_time=time.time()
+        return Result(success=True,result_cost=node.cost,solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
+    nodes_expanded=0
+    while len(fr)!=0:
+        node=fr.popleft()
+        if problem.is_goal_state(node.state):
+            end_time=time.time()
+            return Result(success=True,result_cost=node.cost,nodes_frontier=len(fr),nodes_expanded=nodes_expanded,solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
+        for action in problem.get_actions(node.state):
+            child=node.generate_child_node(problem=problem,action=action)
+            nodes_expanded+=1
+            fr.append(child)
+    return Result()
+
+def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> Result:
+    def comparator_nodes(node1,node2):
         primary_diff=f[0](node1)-f[0](node2)
         if primary_diff!=0:
             return primary_diff
         return f[1](node1)-f[1](node2) if len(f)>1 else 0
 
     node:Node=Node(state=problem.initial_state)
-    fr=SortedList(key=cmp_to_key(compare_nodes))
+    fr=SortedList(key=cmp_to_key(comparator_nodes))
+    start_time=time.time()
     fr.append(node)
     explored_states=set()
+    nodes_expanded=0
     while len(fr)!=0:
-        node=fr.pop()
+        node=fr.pop(0)
         if problem.is_goal_state(node.state):
-            return node.get_action_sequence_to_root()
+            end_time=time.time()
+            return Result(success=True,result_cost=node.cost,nodes_expanded=nodes_expanded,nodes_frontier=len(fr),solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
         explored_states.add(node.state)
         for action in problem.get_actions(node.state):
             child=node.generate_child_node(problem=problem,action=action)
+            nodes_expanded+=1
             if child.state not in explored_states and child not in fr:
                 fr.append(child)
             else:
@@ -56,8 +81,8 @@ def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> deque:
                     fr.append(child)
     return None
 
-def a_star_search(problem:Problem,h:Callable) -> deque:
+def a_star_search(problem:Problem,h:Callable) -> Result:
     return best_first_search(problem=problem,f=(lambda node:node.cost+h(node),h) )
 
-def greedy_search(problem:Problem,h:Callable) -> deque:
+def greedy_search(problem:Problem,h:Callable) -> Result:
     return best_first_search(problem=problem,f=(h,) )
