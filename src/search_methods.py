@@ -66,7 +66,7 @@ def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> Result:
     node:Node=Node(state=problem.initial_state)
     fr=SortedList(key=cmp_to_key(comparator_nodes))
     start_time=time.time()
-    fr.append(node)
+    fr.add(node)
     explored_states=set()
     nodes_expanded=0
     while len(fr)!=0:
@@ -79,7 +79,7 @@ def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> Result:
             child=node.generate_child_node(problem=problem,action=action)
             nodes_expanded+=1
             if child.state not in explored_states and child not in fr:
-                fr.append(child)
+                fr.add(child)
             else:
                 try:
                     child_index=fr.index(node)
@@ -87,7 +87,7 @@ def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> Result:
                     child_index=None
                 if child_index is not None and f[0](child)<f[0](fr[child_index]):
                     fr.pop(child_index)
-                    fr.append(child)
+                    fr.add(child)
     end_time=time.time()
     return Result(success=False,nodes_expanded=nodes_expanded,processing_time=end_time-start_time)
 
