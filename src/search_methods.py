@@ -11,25 +11,28 @@ from result import Result
 def depth_first_search(problem:Problem) -> Result:
     return limited_depth_first_search(problem=problem,limit=math.inf)
 
-#TODO: ver si es necesario agregar un set de estados repetidos para busqueda de arbol
+#TODO:Optimizar y reutilizar algoritmos si es posible
 def limited_depth_first_search(problem:Problem,limit:int) -> Result:#LIFO
     start_time=time.time()
     node:Node=Node(problem.initial_state)
-    fr=[]
-    fr.append(node)
     if problem.is_goal_state(node.state):
         end_time=time.time()
         return Result(success=True,result_cost=node.cost,solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
+    fr=[]
+    fr.append(node)
+    explored_states=set()
     nodes_expanded=0
-    while len(fr)!=0 and limit!=0:
+    while len(fr)!=0 and limit>0:
         node=fr.pop()
-        if problem.is_goal_state(node.state):
-            end_time=time.time()
-            return Result(success=True,result_cost=node.cost,nodes_frontier=len(fr),nodes_expanded=nodes_expanded,solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
+        explored_states.add(node.state)
         for action in problem.get_actions(node.state):
             child=node.generate_child_node(problem=problem,action=action)
             nodes_expanded+=1
-            fr.append(child)
+            if child.state not in explored_states and child not in fr:
+                if problem.is_goal_state(child.state):
+                    end_time=time.time()
+                    return Result(success=True,result_cost=child.cost,solution=child.get_action_sequence_to_root(),processing_time=end_time-start_time)
+                fr.append(child)
         limit-=1
     end_time=time.time()
     return Result(success=False,nodes_expanded=nodes_expanded,processing_time=end_time-start_time)
@@ -38,21 +41,24 @@ def limited_depth_first_search(problem:Problem,limit:int) -> Result:#LIFO
 def breath_first_search(problem:Problem) -> Result:#FIFO
     start_time=time.time()
     node:Node=Node(problem.initial_state)
-    fr=deque()
-    fr.append(node)
     if problem.is_goal_state(node.state):
         end_time=time.time()
         return Result(success=True,result_cost=node.cost,solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
+    fr=deque()
+    fr.append(node)
+    explored_states=set()
     nodes_expanded=0
     while len(fr)!=0:
         node=fr.popleft()
-        if problem.is_goal_state(node.state):
-            end_time=time.time()
-            return Result(success=True,result_cost=node.cost,nodes_frontier=len(fr),nodes_expanded=nodes_expanded,solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
+        explored_states.add(node.state)
         for action in problem.get_actions(node.state):
-            child=node.generate_child_node(problem=problem,action=action)
+            child:Node=node.generate_child_node(problem=problem,action=action)
             nodes_expanded+=1
-            fr.append(child)
+            if child.state not in explored_states and child not in fr:
+                if problem.is_goal_state(child.state):
+                    end_time=time.time()
+                    return Result(success=True,result_cost=child.cost,solution=child.get_action_sequence_to_root(),processing_time=end_time-start_time)
+                fr.append(child)
     end_time=time.time()
     return Result(success=False,nodes_expanded=nodes_expanded,processing_time=end_time-start_time)
 
