@@ -49,8 +49,8 @@ def main():
     states = []
 
     for node in result.solution:
-        states.append(node.state.matrix)
-        # print(node.state.matrix)
+        states.append(node.action)
+        print(node.action)
 
     # for node in result.solution:
     #     n:Node = node

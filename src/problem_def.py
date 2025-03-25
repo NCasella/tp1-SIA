@@ -50,7 +50,7 @@ class Node:
         return Node(state=state,parent=self,action=action,cost=cost)
 
     def __hash__(self):
-        return hash(self.state)
+        return hash((self.state))
 
     def __eq__(self, value):
         return isinstance(value,Node) and self.state==value.state
