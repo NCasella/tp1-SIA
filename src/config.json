@@ -1,4 +1,4 @@
 {
-    "filepath": "levels/level0.txt",
-    "algorithm": "a*"
+    "filepath": "levels/level1.txt",
+    "algorithm": "bfs"
 }

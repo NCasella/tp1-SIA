@@ -36,15 +36,26 @@ def run(config_path):
 
     sokoban = Sokoban(matrix)
 
-    result: Result = algorithm_map[params["algorithm"]](sokoban)
+    result:Result = algorithm_map[params["algorithm"]](sokoban)
 
     print("Success:", result.success)
     print("Cost:", result.result_cost)
 
-    states = [node.action for node in result.solution]
+    states = []
 
-    for action in states:
-        print(action)
+    for node in result.solution:
+        states.append(node)
+        print(node.action)
+
+    # for node in result.solution:
+    #     n:Node = node
+    #     print(n.state)
+
+    #TODO animar el resultado
+
+    # print("Parsed Matrix:")
+    # for row in matrix:
+    #     print(row)
 
     return states
 

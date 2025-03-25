@@ -4,18 +4,20 @@ from main import run
 import time
 
 MAP_MAX_SIZE = 32
-TILE_SIZE = 16
+TILE_SIZE = 24
 
 states = []
-curr_step = 0
+global curr_step 
+curr_step = 1
 
 def render():
     # update map state
-    padded_map = add_padding(states[curr_step], MAP_MAX_SIZE, MAP_MAX_SIZE, " ")
-
+    # padded_map = add_padding(states[curr_step].state.matrix, MAP_MAX_SIZE, MAP_MAX_SIZE, " ")
+    
+    padded_map = states[curr_step].state.matrix
     for y, row in enumerate(padded_map):
         for x, char in enumerate(row):
-            
+
             if char == " ":
                 color = (0, 0, 0)
             elif char == "#":
@@ -52,7 +54,8 @@ def add_padding(map_state, max_width, max_height, pad_char=" "):
     return padded_level
 
 def update():
-    if states.__len__ - 1 < curr_step:
+    global curr_step
+    if curr_step < len(states) - 1:
         curr_step += 1
 
 
