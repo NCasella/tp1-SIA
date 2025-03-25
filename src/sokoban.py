@@ -5,6 +5,7 @@ from enum import Enum
 _WALL='#'
 _BOX='$'
 _OBJECTIVE='.'
+_BOX_ON_OBJECTIVE='*'
 _EMPTYNESS=' '
 _PLAYER='@'
 
@@ -21,7 +22,7 @@ class Sokoban(Problem):
         self.objective_positions=set()
         for i in range(initial_state):
             for j in range(initial_state[i]):
-                if initial_state[i][j]==_OBJECTIVE:
+                if initial_state[i][j]==_OBJECTIVE or initial_state[i][j]==_BOX_ON_OBJECTIVE:
                     self.objective_positions.add((i,j))
 
     def get_actions(self,state):
