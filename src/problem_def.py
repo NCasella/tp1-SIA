@@ -4,9 +4,8 @@ from collections import deque
 #implementaciones basadas en los pseudocodigos de AI A Modern Approach
 
 class Problem(ABC):
-    def __init__(self,initial_state,goal_state):
+    def __init__(self,initial_state):
         self.initial_state=initial_state
-        self.goal_state=goal_state
 
     @abstractmethod
     def get_state_result(self,state,action):
@@ -22,9 +21,10 @@ class Problem(ABC):
     def get_cost_to_state(self,start_state,action,end_state):
         """costo de llegar desde start_state hasta end_state, con action"""
         #TODO cada uno de los problemas
-
+    @abstractmethod
     def is_goal_state(self,state):
-        return state == self.goal_state
+        """Verifica si state es el objetivo"""
+        #TODO cada uno de los problemas
 
 class Node:
     def __init__(self,state,parent=None,cost=0,action=None):
@@ -53,4 +53,4 @@ class Node:
         return hash((self.parent,self.state))
 
     def __eq__(self, value):
-        return isinstance(Node,value) and self.parent == value.parent and self.state==value.state
+        return isinstance(value,Node) and self.parent == value.parent and self.state==value.state
