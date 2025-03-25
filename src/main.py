@@ -19,6 +19,35 @@ class TxtToMatrixParser:
             sys.exit(1)
         return matrix
 
+def run(config_path):
+    with open(config_path, 'r') as file:
+        params = json.load(file)
+
+    filepath = params["filepath"]
+    parser = TxtToMatrixParser(filepath)
+    matrix = parser.txt_to_matrix()
+
+    algorithm_map = {
+        "bfs": breath_first_search,
+        "dfs": depth_first_search,
+        "greedy": greedy_search,
+        "a*": a_star_search,
+    }
+
+    sokoban = Sokoban(matrix)
+
+    result: Result = algorithm_map[params["algorithm"]](sokoban)
+
+    print("Success:", result.success)
+    print("Cost:", result.result_cost)
+
+    states = [node.action for node in result.solution]
+
+    for action in states:
+        print(action)
+
+    return states
+
 def main():
     if len(sys.argv) != 2:
         print("Usage: python main.py config.json")
@@ -61,6 +90,7 @@ def main():
     # print("Parsed Matrix:")
     # for row in matrix:
     #     print(row)
+    return states
 
 if __name__ == "__main__":
     main()
