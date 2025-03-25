@@ -22,8 +22,16 @@ class SokobanState:
         self.player_position=player_position
         self.boxes_positions=boxes_positions
 
+        #import sys  
+        #for i in range(len(matrix)):
+        #    sys.stdout.write("[")
+        #    for j in range(len(matrix[i])):
+        #        sys.stdout.write(matrix[i][j])
+        #    print("]")
+        #print("----------------")
+
     def __hash__(self):
-        return hash(str(self.matrix))
+        return hash((tuple(map(tuple,self.matrix))))
 
     def __eq__(self, value):
         return isinstance(value,SokobanState) and self.matrix==value.matrix
