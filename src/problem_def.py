@@ -8,7 +8,7 @@ class Problem(ABC):
         self.initial_state=initial_state
 
     @abstractmethod
-    def get_state_result(self,state,action):
+    def get_state_result(self,current_state,action):
         """estado resultante de aplicar action a state"""
         #TODO cada uno de los problemas
 
@@ -35,12 +35,12 @@ class Node:
 
     def get_action_sequence_to_root(self):
         """Devuelve la secuencia de acciones para llegar a la solucion del estado del nodo"""
-        action_sequence=deque()
+        node_sequence=deque()
         node=self
         while(node is not None):
-            action_sequence.appendleft(node.action)
+            node_sequence.appendleft(node)
             node=node.parent
-        return action_sequence
+        return node_sequence
 
 
     def generate_child_node(self,problem:Problem, action):
