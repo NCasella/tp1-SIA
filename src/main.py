@@ -1,6 +1,6 @@
 import sys
 import json 
-from sokoban import Sokoban
+from sokoban import Sokoban, SokobanState
 from search_methods import *
 
 class TxtToMatrixParser:
@@ -42,6 +42,9 @@ def main():
     sokoban = Sokoban(matrix)
 
     result = algorithm_map[params["algorithm"]](sokoban)
+
+    print("Success:", result.success)
+    print("Cost:", result.result_cost)
 
     #TODO animar el resultado
 

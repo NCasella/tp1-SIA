@@ -8,7 +8,7 @@ class Problem(ABC):
         self.initial_state=initial_state
 
     @abstractmethod
-    def get_state_result(self,state,action):
+    def get_state_result(self,current_state,action):
         """estado resultante de aplicar action a state"""
         #TODO cada uno de los problemas
 
