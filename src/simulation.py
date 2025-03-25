@@ -36,6 +36,10 @@ def render():
                 color = (0, 0, 0)  # Default color in case of an unknown character
 
             pygame.draw.rect(screen, color, (x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE))
+
+        text_surface = pygame.font.Font(None, 36).render(str(curr_step), True, (255, 255, 255))
+
+        screen.blit(text_surface, (10, 10))
             
 
 def add_padding(map_state, max_width, max_height, pad_char=" "):

@@ -33,6 +33,7 @@ def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node])
         for action in problem.get_actions(node.state):
             child=node.generate_child_node(problem=problem,action=action)
             nodes_expanded+=1
+            print(nodes_expanded)
             if child.state not in explored_states and child not in fr:
                 if problem.is_goal_state(child.state):
                     end_time=time.time()
