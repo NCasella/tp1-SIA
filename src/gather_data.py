@@ -10,7 +10,7 @@ def process_algorithm(algorithm, levels, limit, queue):
     results = []
     for i, level in enumerate(levels, start=1):
         print(f"[INFO] {algorithm}: Processing level {i}/{len(levels)} - {level}")
-        result = run_with_params(algorithm, limit, level)
+        result = run_with_params(algorithm, "h3", limit, level)
         results.append([algorithm, level, result.result_cost, result.nodes_expanded, result.nodes_frontier, result.processing_time])
     print(f"[INFO] Process finished for algorithm: {algorithm}")
     queue.put(results)
