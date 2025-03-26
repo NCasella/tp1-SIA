@@ -1,5 +1,5 @@
 {
-    "filepath": "levels/box8.txt",
-    "algorithm": "dfs",
-    "limit": 41
+    "filepath": "levels/box9.txt",
+    "algorithm": "greedy",
+    "limit": 300
 }

@@ -77,6 +77,51 @@ def run(config_path):
     #     print(row)
     return result
 
+def run_with_params(algorithm, limit, filepath):
+
+    parser = TxtToMatrixParser(filepath)
+    matrix = parser.txt_to_matrix()
+
+    algorithm_map = {
+        "bfs": breath_first_search,
+        "dfs": limited_depth_first_search,
+        "greedy": greedy_search,
+        "a*": a_star_search,
+    }
+    def h1(node:Node):
+        sum=0
+        for boxes_positions in node.state.boxes_positions:
+            distances=[]
+            for objectives in sokoban.objective_positions:
+                distances.append(abs(objectives[0]-boxes_positions[0])+abs(objectives[1]-boxes_positions[1]))
+            sum+=np.min(distances)
+        return sum
+
+
+    sokoban = Sokoban(matrix)
+
+    if algorithm=="a*" or algorithm=="greedy":
+        result:Result = algorithm_map[algorithm](sokoban,h1)
+    elif algorithm=="dfs":
+        result:Result=algorithm_map[algorithm](sokoban,limit)
+    else:
+        result:Result = algorithm_map[algorithm](sokoban)
+
+   # for node in result.solution:
+   #     states.append(node.action)
+   #     print(node.action)
+
+    # for node in result.solution:
+    #     n:Node = node
+    #     print(n.state)
+
+    #TODO animar el resultado
+
+    # print("Parsed Matrix:")
+    # for row in matrix:
+    #     print(row)
+    return result
+
 def main():
     if len(sys.argv) != 2:
         print("Usage: python main.py config.json")

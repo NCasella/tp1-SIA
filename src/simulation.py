@@ -98,7 +98,6 @@ def start_run():
     thread.join()  # Ensure the thread is finished before continuing
 
 pygame.init()
-SCREEN_SIZE = 600
 screen = pygame.display.set_mode((SCREEN_SIZE, SCREEN_SIZE))
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
