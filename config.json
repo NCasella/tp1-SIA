@@ -1,6 +1,5 @@
 {
-    "filepath": "levels/more_boxes_4/1.txt",
-    "algorithm": "a*",
-    "limit": 300,
-    "heuristic": "h1"
+    "filepath": "../levels/box1.txt",
+    "algorithm": "dfs",
+    "limit": 200
 }
