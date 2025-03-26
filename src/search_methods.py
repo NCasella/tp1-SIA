@@ -26,7 +26,7 @@ def breath_first_search(problem:Problem) -> Result:#COLA
     return _general_search(problem=problem,limit=math.inf,collection=deque())
 
 def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node]) -> Result:
-    start_time=time.time()
+    start_time=time.perf_counter()
     node:Node=Node(problem.initial_state)
     fr=collection
     fr.append(node)
@@ -36,7 +36,7 @@ def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node])
     while len(fr)!=0:
         node=fr.popleft() if isinstance(fr,deque) else fr.pop()
         if problem.is_goal_state(node.state):
-            end_time=time.time()
+            end_time=time.perf_counter()
             return Result(success=True,result_cost=node.cost,nodes_expanded=nodes_expanded,nodes_frontier=len(fr),solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
         if node.depth>=limit:
             cutoff=True
@@ -49,7 +49,7 @@ def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node])
                 if child.state not in explored_states or child.depth < explored_states.get(child.state, math.inf):
                     fr.append(child)
         
-    end_time=time.time()
+    end_time=time.perf_counter()
     return Result(success=False,nodes_expanded=nodes_expanded,processing_time=end_time-start_time,limit_reached=cutoff)
 
 def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> Result:
@@ -61,14 +61,14 @@ def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> Result:
 
     node:Node=Node(state=problem.initial_state)
     fr=SortedList(key=cmp_to_key(node_comparator))
-    start_time=time.time()
+    start_time=time.perf_counter()
     fr.add(node)
     explored_states=set()
     nodes_expanded=0
     while len(fr)!=0:
         node=fr.pop(0)
         if problem.is_goal_state(node.state):
-            end_time=time.time()
+            end_time=time.perf_counter()
             return Result(success=True,result_cost=node.cost,nodes_expanded=nodes_expanded,nodes_frontier=len(fr),solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
         explored_states.add(node.state)
         for action in problem.get_actions(node.state):
@@ -83,7 +83,7 @@ def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> Result:
             elif child_index is not None and f[0](child)<f[0](fr[child_index]):
                 fr.pop(child_index)
                 fr.add(child)
-    end_time=time.time()
+    end_time=time.perf_counter()
     return Result(success=False,nodes_expanded=nodes_expanded,processing_time=end_time-start_time)
 
 def a_star_search(problem:Problem,h:Callable) -> Result:
