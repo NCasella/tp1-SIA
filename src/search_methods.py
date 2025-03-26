@@ -12,14 +12,15 @@ def depth_first_search(problem:Problem) -> Result:
     return limited_depth_first_search(problem=problem,limit=math.inf)
 def iterative_depth_limited_first_search(problem:Problem):
     depth=0
-    cutoff=None
+    cutoff=False
     while cutoff is None:
         result:Result=limited_depth_first_search(problem=problem,limit=depth)
         depth+=1
-        cutoff=result.success
+        cutoff=result.limit_reached
+    return result
 
 def limited_depth_first_search(problem:Problem,limit:int) -> Result:#STACK
-    return _general_search(problem=problem,limit=limit,collection=[])
+    return _general_search(problem=problem,limit=limit,collection=list())
 
 def breath_first_search(problem:Problem) -> Result:#COLA
     return _general_search(problem=problem,limit=math.inf,collection=deque())
@@ -34,22 +35,24 @@ def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node])
     fr.append(node)
     explored_states=set()
     nodes_expanded=0
-    while len(fr)!=0 and limit>0:
+    cutoff=False
+    while len(fr)!=0:
         node=fr.popleft() if isinstance(fr,deque) else fr.pop()
+        if problem.is_goal_state(node.state):
+            end_time=time.time()
+            return Result(success=True,result_cost=node.cost,nodes_expanded=nodes_expanded,nodes_frontier=len(fr),solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
+        if node.depth>=limit:
+            cutoff=True
+            continue
         explored_states.add(node.state)
         for action in problem.get_actions(node.state):
             child=node.generate_child_node(problem=problem,action=action)
             nodes_expanded+=1
-            print(nodes_expanded)
-            if child.state not in explored_states and child not in fr:
-                if problem.is_goal_state(child.state):
-                    end_time=time.time()
-                    return Result(success=True,result_cost=child.cost,nodes_frontier=len(fr),solution=child.get_action_sequence_to_root(),processing_time=end_time-start_time)
+            if child.state not in explored_states:
                 fr.append(child)
-        limit-=1
+        
     end_time=time.time()
-    cutoff_result=False if len(fr)==0 and limit>0 else None 
-    return Result(success=cutoff_result,nodes_expanded=nodes_expanded,processing_time=end_time-start_time)
+    return Result(success=False,nodes_expanded=nodes_expanded,processing_time=end_time-start_time,limit_reached=cutoff)
 
 def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> Result:
     def node_comparator(node1,node2):

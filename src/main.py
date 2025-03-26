@@ -30,7 +30,7 @@ def run(config_path):
 
     algorithm_map = {
         "bfs": breath_first_search,
-        "dfs": depth_first_search,
+        "dfs": limited_depth_first_search,
         "greedy": greedy_search,
         "a*": a_star_search,
     }
@@ -79,7 +79,7 @@ def main():
         
     algorithm_map = {
         "bfs": breath_first_search,
-        "dfs": depth_first_search,
+        "dfs": limited_depth_first_search,
         "greedy": greedy_search,
         "a*": a_star_search,
     }
@@ -98,16 +98,21 @@ def main():
 
     if params["algorithm"]=="a*" or params["algorithm"]=="greedy":
         result:Result = algorithm_map[params["algorithm"]](sokoban,h1)
+    elif params["algorithm"]=="dfs":
+        result:Result=algorithm_map[params["algorithm"]](sokoban,params["limit"])
     else:
-        result:Result=algorithm_map[params["algorithm"]](sokoban)
+        result:Result = algorithm_map[params["algorithm"]](sokoban)
 
     print("Success:", result.success)
     print("Cost:", result.result_cost)
     print(f"Result {result.processing_time}")
+    print(f"expanded: {result.nodes_expanded}")
+    print(f"limit reades {result.limit_reached}")
+    print(f"asfasfasf")
     states = []
-    for node in result.solution:
-        states.append(node.action)
-        print(node.action)
+   # for node in result.solution:
+   #     states.append(node.action)
+   #     print(node.action)
 
     # for node in result.solution:
     #     n:Node = node

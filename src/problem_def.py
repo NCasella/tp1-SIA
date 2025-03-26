@@ -27,8 +27,9 @@ class Problem(ABC):
         #TODO cada uno de los problemas
 
 class Node:
-    def __init__(self,state,parent=None,cost=0,action=None):
+    def __init__(self,state,parent=None,cost=0,action=None,depth=0):
         self.state=state
+        self.depth=depth
         self.parent=parent
         self.cost=cost
         self.action=action
@@ -47,7 +48,7 @@ class Node:
         """Expande el nodo, generando un nodo hijo, aplicando action """
         state=problem.get_state_result(current_state=self.state,action=action)
         cost=self.cost+problem.get_cost_to_state(self.state,action,state)
-        return Node(state=state,parent=self,action=action,cost=cost)
+        return Node(state=state,parent=self,action=action,cost=cost,depth=self.depth+1)
 
     def __hash__(self):
         return hash((self.state))
