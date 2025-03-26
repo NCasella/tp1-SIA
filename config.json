@@ -1,4 +1,5 @@
 {
-    "filepath": "levels/level2.txt",
-    "algorithm": "bfs"
+    "filepath": "levels/box8.txt",
+    "algorithm": "dfs",
+    "limit": 41
 }
