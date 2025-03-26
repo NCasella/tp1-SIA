@@ -12,8 +12,8 @@ def depth_first_search(problem:Problem) -> Result:
     return limited_depth_first_search(problem=problem,limit=math.inf)
 def iterative_depth_limited_first_search(problem:Problem):
     depth=0
-    cutoff=False
-    while cutoff is None:
+    cutoff=True
+    while cutoff:
         result:Result=limited_depth_first_search(problem=problem,limit=depth)
         depth+=1
         cutoff=result.limit_reached

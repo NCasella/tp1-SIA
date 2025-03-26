@@ -34,6 +34,7 @@ def run(config_path):
         "dfs": limited_depth_first_search,
         "greedy": greedy_search,
         "a*": a_star_search,
+        "iddfs": iterative_depth_limited_first_search
     }
     def h1(node:Node):
         sum=0
@@ -87,6 +88,7 @@ def run_with_params(algorithm, limit, filepath):
         "dfs": limited_depth_first_search,
         "greedy": greedy_search,
         "a*": a_star_search,
+        "iddfs": iterative_depth_limited_first_search
     }
     def h1(node:Node):
         sum=0
