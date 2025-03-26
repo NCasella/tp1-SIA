@@ -1,12 +1,56 @@
 [
     {
+        "group": "base",
         "algorithms": ["a*", "greedy", "dfs", "bfs"],
-        "levels": ["levels/box1.txt", "levels/box2.txt"],
+        "levels": ["levels/base/1.txt", "levels/base/2.txt", "levels/base/3.txt", "levels/base/4.txt"],
         "limit": 500
     },
     {
+        "group": "blocked_diagonal",
         "algorithms": ["a*", "greedy", "dfs", "bfs"],
-        "levels": ["levels/box3.txt", "levels/box4.txt"],
-        "limit": 700
+        "levels": ["levels/blocked_diagonal/1.txt", "levels/blocked_diagonal/2.txt", "levels/blocked_diagonal/3.txt", "levels/blocked_diagonal/4.txt"],
+        "limit": 500
+    },
+    {
+        "group": "diagonal",
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/diagonal/1.txt", "levels/diagonal/2.txt", "levels/diagonal/3.txt", "levels/diagonal/4.txt"],
+        "limit": 500
+    },
+    {
+        "group": "more_boxes_4",
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/more_boxes_4/1.txt", "levels/more_boxes_4/2.txt", "levels/more_boxes_4/3.txt", "levels/more_boxes_4/4.txt"],
+        "limit": 500
+    },
+    {
+        "group": "more_boxes_7",
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/more_boxes_7/1.txt", "levels/more_boxes_7/2.txt", "levels/more_boxes_7/3.txt", "levels/more_boxes_7/4.txt"],
+        "limit": 500
+    },
+    {
+        "group": "more_space_15",
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/more_space_15/1.txt", "levels/more_space_15/2.txt", "levels/more_space_15/3.txt", "levels/more_space_15/4.txt"],
+        "limit": 500
+    },
+    {
+        "group": "pathway",
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/pathway/1.txt", "levels/pathway/2.txt", "levels/pathway/3.txt", "levels/pathway/4.txt"],
+        "limit": 500
+    },
+    {
+        "group": "scattered",
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/scattered/1.txt", "levels/scattered/2.txt", "levels/scattered/3.txt", "levels/scattered/4.txt"],
+        "limit": 500
+    },
+    {
+        "group": "walls_3",
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/walls_3/1.txt", "levels/walls_3/2.txt", "levels/walls_3/3.txt", "levels/walls_3/4.txt"],
+        "limit": 500
     }
 ]
