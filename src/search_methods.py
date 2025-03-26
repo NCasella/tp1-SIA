@@ -28,12 +28,9 @@ def breath_first_search(problem:Problem) -> Result:#COLA
 def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node]) -> Result:
     start_time=time.time()
     node:Node=Node(problem.initial_state)
-    if problem.is_goal_state(node.state):
-        end_time=time.time()
-        return Result(success=True,result_cost=node.cost,solution=node.get_action_sequence_to_root(),processing_time=end_time-start_time)
     fr=collection
     fr.append(node)
-    explored_states=set()
+    explored_states={}
     nodes_expanded=0
     cutoff=False
     while len(fr)!=0:
@@ -44,12 +41,13 @@ def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node])
         if node.depth>=limit:
             cutoff=True
             continue
-        explored_states.add(node.state)
-        for action in problem.get_actions(node.state):
-            child=node.generate_child_node(problem=problem,action=action)
-            nodes_expanded+=1
-            if child.state not in explored_states:
-                fr.append(child)
+        if node.state not in explored_states or node.depth < explored_states[node.state]:
+            explored_states[node.state] = node.depth
+            for action in problem.get_actions(node.state):
+                child=node.generate_child_node(problem=problem,action=action)
+                nodes_expanded+=1
+                if child.state not in explored_states or child.depth < explored_states.get(child.state, math.inf):
+                    fr.append(child)
         
     end_time=time.time()
     return Result(success=False,nodes_expanded=nodes_expanded,processing_time=end_time-start_time,limit_reached=cutoff)

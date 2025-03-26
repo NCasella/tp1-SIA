@@ -107,12 +107,11 @@ def main():
     print("Cost:", result.result_cost)
     print(f"Result {result.processing_time}")
     print(f"expanded: {result.nodes_expanded}")
-    print(f"limit reades {result.limit_reached}")
-    print(f"asfasfasf")
+    print(f"limit reached {result.limit_reached}")
     states = []
-   # for node in result.solution:
-   #     states.append(node.action)
-   #     print(node.action)
+    # for node in result.solution:
+    #     states.append(node.action)
+    #     print(node.action)
 
     # for node in result.solution:
     #     n:Node = node
