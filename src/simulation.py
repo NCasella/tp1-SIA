@@ -2,9 +2,12 @@ import pygame
 import pygame_menu
 from main import run
 import time
+import threading
+from search_methods import *
 
 MAP_MAX_SIZE = 32
 TILE_SIZE = 24
+SCREEN_SIZE = MAP_MAX_SIZE * TILE_SIZE
 
 states = []
 global curr_step 
@@ -14,6 +17,8 @@ def render():
     # update map state
     # padded_map = add_padding(states[curr_step].state.matrix, MAP_MAX_SIZE, MAP_MAX_SIZE, " ")
     
+    print(curr_step)
+    print(states)
     padded_map = states[curr_step].state.matrix
     for y, row in enumerate(padded_map):
         for x, char in enumerate(row):
@@ -63,36 +68,77 @@ def update():
         curr_step += 1
 
 
-# pygame setup
-pygame.init()
-screen = pygame.display.set_mode((MAP_MAX_SIZE * TILE_SIZE, MAP_MAX_SIZE * TILE_SIZE))
-clock = pygame.time.Clock()
-
-# Pygame Menu
-menu = pygame_menu.Menu("Select Level", 500, 500, theme=pygame_menu.themes.THEME_DARK)
-menu.add.button("Start", lambda: menu.disable())  # Close the menu and start the game
-menu.add.button("Quit", pygame.quit)  # Quit the game
-
-# Show the menu
-menu.mainloop(screen)
-
-running = True
-
-states = run("config.json")
-
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+def processing_loop():
+    dots = ""
+    running = True
+    while running:
+        screen.fill("black")
+        text = font.render(f"Processing Simulation{dots}", True, "white")
+        screen.blit(text, (SCREEN_SIZE // 2 - text.get_width() // 2, SCREEN_SIZE // 2 - text.get_height() // 2))
+        pygame.display.flip()
+        dots = "." * ((len(dots) + 1) % 4)  # Cycles through '', '.', '..', '...'
+        clock.tick(1)  # Controls update speed
+        if event.is_set():  # Stop when the thread finishes
             running = False
 
+def start_run():
+    global result
+    global thread
+    global event
+    
+    def run_and_store():
+        global result
+        result = run("config.json")  # Assign result directly to states
+        event.set()  # Signal that processing is complete
+    
+    event.clear()  # Reset the event
+    thread = threading.Thread(target=run_and_store)
+    thread.start()
+    processing_loop()
+    thread.join()  # Ensure the thread is finished before continuing
+
+pygame.init()
+SCREEN_SIZE = 600
+screen = pygame.display.set_mode((SCREEN_SIZE, SCREEN_SIZE))
+clock = pygame.time.Clock()
+font = pygame.font.Font(None, 36)
+
+states = [] 
+result = None 
+event = threading.Event()  
+start_run()
+
+if not result.success:
     screen.fill("black")
+    text_surface = pygame.font.Font(None, 36).render("No solution found", True, (255, 255, 255))
 
-    render()
-    update()
-
+    screen.blit(text_surface, (10, 10))
     pygame.display.flip()
+    time.sleep(5)
+    pygame.quit
 
-    clock.tick(60)  # limits FPS to 60
-    time.sleep(0.1)
+else:
+    for node in result.solution:
+        states.append(node)
 
-pygame.quit()
+    menu = pygame_menu.Menu("Simulation", SCREEN_SIZE, SCREEN_SIZE, theme=pygame_menu.themes.THEME_DARK)
+    menu.add.button("Start", lambda: menu.disable())
+    menu.add.button("Quit", pygame.quit)
+    menu.mainloop(screen)
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        screen.fill("black")
+
+        render()
+        update()
+
+        pygame.display.flip()
+
+        clock.tick(120)  # limits FPS to 60
+
+    pygame.quit()
