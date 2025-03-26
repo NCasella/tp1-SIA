@@ -1,5 +1,5 @@
 {
-    "filepath": "levels/box6.txt",
+    "filepath": "../levels/box1.txt",
     "algorithm": "dfs",
-    "limit": 300
+    "limit": 200
 }
