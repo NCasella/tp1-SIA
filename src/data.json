@@ -1,0 +1,12 @@
+[
+    {
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/box1.txt", "levels/box2.txt"],
+        "limit": 500
+    },
+    {
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/box3.txt", "levels/box4.txt"],
+        "limit": 700
+    }
+]
