@@ -2,6 +2,7 @@ import sys
 import json 
 from sokoban import Sokoban, SokobanState
 from search_methods import *
+import numpy as np 
 
 class TxtToMatrixParser:
     def __init__(self, file_path):
@@ -72,22 +73,38 @@ def main():
     parser = TxtToMatrixParser(filepath)
     matrix = parser.txt_to_matrix()
 
+            
+            
+
+        
     algorithm_map = {
         "bfs": breath_first_search,
         "dfs": depth_first_search,
         "greedy": greedy_search,
         "a*": a_star_search,
     }
+    def h1(node:Node):
+        sum=0
+        for boxes_positions in node.state.boxes_positions:
+            distances=[]
+            for objectives in sokoban.objective_positions:
+                distances.append(abs(objectives[0]-boxes_positions[0])+abs(objectives[1]-boxes_positions[1]))
+            sum+=np.min(distances)
+        return sum
+
 
     sokoban = Sokoban(matrix)
 
-    result:Result = algorithm_map[params["algorithm"]](sokoban)
+
+    if params["algorithm"]=="a*" or params["algorithm"]=="greedy":
+        result:Result = algorithm_map[params["algorithm"]](sokoban,h1)
+    else:
+        result:Result=algorithm_map[params["algorithm"]](sokoban)
 
     print("Success:", result.success)
     print("Cost:", result.result_cost)
-
+    print(f"Result {result.processing_time}")
     states = []
-
     for node in result.solution:
         states.append(node.action)
         print(node.action)
