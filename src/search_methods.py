@@ -2,7 +2,7 @@ from collections import deque
 import math
 import time
 from functools import cmp_to_key
-from _collections_abc import Callable,Iterable
+from _collections_abc import Callable
 from sortedcontainers.sortedlist import SortedList
 from problem_def import Problem,Node
 from result import Result
@@ -10,6 +10,13 @@ from result import Result
 
 def depth_first_search(problem:Problem) -> Result:
     return limited_depth_first_search(problem=problem,limit=math.inf)
+def iterative_depth_limited_first_search(problem:Problem):
+    depth=0
+    cutoff=None
+    while cutoff is None:
+        result:Result=limited_depth_first_search(problem=problem,limit=depth)
+        depth+=1
+        cutoff=result.success
 
 def limited_depth_first_search(problem:Problem,limit:int) -> Result:#STACK
     return _general_search(problem=problem,limit=limit,collection=[])
@@ -41,7 +48,8 @@ def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node])
                 fr.append(child)
         limit-=1
     end_time=time.time()
-    return Result(success=False,nodes_expanded=nodes_expanded,processing_time=end_time-start_time)
+    cutoff_result=False if len(fr)==0 and limit>0 else None 
+    return Result(success=cutoff_result,nodes_expanded=nodes_expanded,processing_time=end_time-start_time)
 
 def best_first_search(problem:Problem,f:tuple[Callable,Callable]) -> Result:
     def node_comparator(node1,node2):
