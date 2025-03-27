@@ -118,12 +118,12 @@ def run(config_path):
     else:
         result:Result = algorithm_map[params["algorithm"]](sokoban)
 
-    print("Success:", result.success)
-    print("Cost:", result.result_cost)
-    print(f"Result {result.processing_time}")
-    print(f"expanded: {result.nodes_expanded}")
-    print(f"limit reades {result.limit_reached}")
-    print(f"asfasfasf")
+    
+    
+    
+    
+    
+    
 
    # for node in result.solution:
    #     states.append(node.action)
@@ -194,11 +194,11 @@ def main():
     else:
         result:Result = algorithm_map[params["algorithm"]](sokoban)
 
-    print("Success:", result.success)
-    print("Cost:", result.result_cost)
-    print(f"Result {result.processing_time}")
-    print(f"expanded: {result.nodes_expanded}")
-    print(f"limit reached {result.limit_reached}")
+    
+    
+    
+    
+    
     states = []
     # for node in result.solution:
     #     states.append(node.action)

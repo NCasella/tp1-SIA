@@ -17,8 +17,7 @@ def render():
     # update map state
     # padded_map = add_padding(states[curr_step].state.matrix, MAP_MAX_SIZE, MAP_MAX_SIZE, " ")
     
-    print(curr_step)
-    print(states)
+
     padded_map = states[curr_step].state.matrix
     for y, row in enumerate(padded_map):
         for x, char in enumerate(row):
