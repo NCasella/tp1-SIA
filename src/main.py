@@ -110,13 +110,18 @@ def run(config_path):
     global sokoban
     sokoban = Sokoban(matrix)
 
+    algo = params["algorithm"]
 
-    if params["algorithm"]=="a*" or params["algorithm"]=="greedy":
-        result:Result = algorithm_map[params["algorithm"]](sokoban, h1)
-    elif params["algorithm"]=="dfs":
-        result:Result=algorithm_map[params["algorithm"]](sokoban,params["limit"])
+    if algo not in algorithm_map:
+        print("Invalid specified algorithm")
+        sys.exit(1)
+
+    if algo=="a*" or algo=="greedy":
+        result:Result = algorithm_map[algo](sokoban, h1)
+    elif algo=="dfs":
+        result:Result=algorithm_map[algo](sokoban,params["limit"])
     else:
-        result:Result = algorithm_map[params["algorithm"]](sokoban)
+        result:Result = algorithm_map[algo](sokoban)
 
     
     

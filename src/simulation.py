@@ -85,6 +85,10 @@ def start_run():
     global result
     global thread
     global event
+
+    if len(sys.argv) < 2:
+        print("Usage: python simulation.py config.json")
+        sys.exit(1)
     
     def run_and_store():
         global result
