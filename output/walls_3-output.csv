@@ -1,0 +1,17 @@
+0.Algorithm;Level;Cost;Nodes Expanded;Nodes Frontier;Processing Time (s)
+bfs;levels/walls_3/1,txt;15;1980;242;0.021273211000334413
+bfs;levels/walls_3/2.txt;15;2007;240;0.019800952999503352
+bfs;levels/walls_3/3.txt;15;2184;245;0.01977687800081185
+bfs;levels/walls_3/4.txt;15;2166;245;0.03941065300023183
+greedy;levels/walls_3/1.txt;15;501;25;0.09743887200056633
+greedy;levels/walls_3/2.txt;15;501;25;0.09610650299964618
+greedy;levels/walls_3/3.txt;15;496;24;0.08822103700003936
+greedy;levels/walls_3/4.txt;15;493;24;0.08530695100034791
+a*;levels/walls_3/1.txt;15;570;73;0.16447497100034525
+a*;levels/walls_3/2.txt;15;570;73;0.15984364900032233
+a*;levels/walls_3/3.txt;15;566;72;0.1471801809993849
+a*;levels/walls_3/4.txt;15;563;72;0.1436997379996683
+dfs;levels/walls_3/1.txt;189;60171;189;0.5718057940002836
+dfs;levels/walls_3/2.txt;229;46392;226;0.4395439569998416
+dfs;levels/walls_3/3.txt;53;5834;51;0.04420963599932293
+dfs;levels/walls_3/4.txt;407;44005;341;0.3434311049995813

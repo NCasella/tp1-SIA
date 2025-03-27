@@ -1,0 +1,17 @@
+Algorithm;Level;Cost;Nodes Expanded;Nodes Frontier;Processing Time (s)
+greedy;levels/more_space_15/1.txt;11;115;27;0.013950915000350506
+greedy;levels/more_space_15/2.txt;11;115;27;0.01450972400016326
+greedy;levels/more_space_15/3.txt;11;153;27;0.021908137000536954
+greedy;levels/more_space_15/4.txt;11;153;27;0.022510137000608665
+bfs;levels/more_space_15/1.txt;11;853;221;0.008680114000526373
+bfs;levels/more_space_15/2.txt;11;953;239;0.011851664999994682
+bfs;levels/more_space_15/3.txt;11;1459;395;0.014415458999792463
+bfs;levels/more_space_15/4.txt;11;1439;393;0.02905385399935767
+a*;levels/more_space_15/1.txt;11;115;27;0.02180479300022853
+a*;levels/more_space_15/2.txt;11;115;27;0.020590609999999288
+a*;levels/more_space_15/3.txt;11;153;27;0.031035408999741776
+a*;levels/more_space_15/4.txt;11;153;27;0.02658974699988903
+dfs;levels/more_space_15/1.txt;499;1004039;602;9.998623669000153
+dfs;levels/more_space_15/2.txt;375;521214;478;5.288534564000656
+dfs;levels/more_space_15/3.txt;11;43;27;0.00035192899940739153
+dfs;levels/more_space_15/4.txt;499;979434;647;10.84679787099958

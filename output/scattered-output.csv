@@ -1,0 +1,17 @@
+Algorithm;Level;Cost;Nodes Expanded;Nodes Frontier;Processing Time (s)
+bfs;levels/scattered/1.txt;13;629;90;0.007612385999891558
+bfs;levels/scattered/2.txt;13;650;89;0.005947528000433522
+bfs;levels/scattered/3.txt;17;1395;165;0.014206324999577191
+bfs;levels/scattered/4.txt;13;690;93;0.006108341999606637
+greedy;levels/scattered/1.txt;13;181;23;0.02801850700052455
+greedy;levels/scattered/2.txt;13;181;23;0.031761431000632
+greedy;levels/scattered/3.txt;17;343;24;0.06655390800005989
+greedy;levels/scattered/4.txt;13;180;22;0.02452292199996009
+a*;levels/scattered/1.txt;13;280;43;0.05911693100006232
+a*;levels/scattered/2.txt;13;280;43;0.052677364999908605
+a*;levels/scattered/3.txt;17;524;59;0.12592566100011027
+a*;levels/scattered/4.txt;13;280;41;0.05083782200017595
+dfs;levels/scattered/1.txt;103;18289;89;0.17229736099943693
+dfs;levels/scattered/2.txt;85;17655;79;0.14949700000033772
+dfs;levels/scattered/3.txt;123;2255;109;0.019230070000048727
+dfs;levels/scattered/4.txt;45;488;45;0.004281254000488843

@@ -1,6 +1,7 @@
 import pygame
 import pygame_menu
 from main import run
+import sys
 import time
 import threading
 from search_methods import *
@@ -17,8 +18,7 @@ def render():
     # update map state
     # padded_map = add_padding(states[curr_step].state.matrix, MAP_MAX_SIZE, MAP_MAX_SIZE, " ")
     
-    print(curr_step)
-    print(states)
+
     padded_map = states[curr_step].state.matrix
     for y, row in enumerate(padded_map):
         for x, char in enumerate(row):
@@ -88,7 +88,7 @@ def start_run():
     
     def run_and_store():
         global result
-        result = run("config.json")  # Assign result directly to states
+        result = run(sys.argv[1])  # Assign result directly to states
         event.set()  # Signal that processing is complete
     
     event.clear()  # Reset the event
@@ -138,6 +138,6 @@ else:
 
         pygame.display.flip()
 
-        clock.tick(120)  # limits FPS to 60
+        clock.tick(30)  # limits FPS to 60
 
     pygame.quit()
