@@ -1,0 +1,17 @@
+Algorithm;Level;Cost;Nodes Expanded;Nodes Frontier;Processing Time (s)
+greedy;levels/blocked_diagonal/1.txt;19;221;31;0.04136404299970309
+greedy;levels/blocked_diagonal/2.txt;19;220;28;0.04071720100000675
+greedy;levels/blocked_diagonal/3.txt;19;228;31;0.043961718999526056
+greedy;levels/blocked_diagonal/4.txt;19;213;28;0.03433520600083284
+bfs;levels/blocked_diagonal/1.txt;19;5292;215;0.06348450499990577
+bfs;levels/blocked_diagonal/2.txt;19;5282;216;0.07137209000029543
+bfs;levels/blocked_diagonal/3.txt;19;5273;216;0.04812807500002236
+bfs;levels/blocked_diagonal/4.txt;19;5301;215;0.04994811599954119
+dfs;levels/blocked_diagonal/1.txt;125;46467;140;0.4164301089995206
+dfs;levels/blocked_diagonal/2.txt;89;1425;91;0.01162955099971441
+dfs;levels/blocked_diagonal/3.txt;73;6156;76;0.05031022900038806
+dfs;levels/blocked_diagonal/4.txt;139;25354;137;0.20201549000012164
+a*;levels/blocked_diagonal/1.txt;19;1405;143;0.49659929299923533
+a*;levels/blocked_diagonal/2.txt;19;1408;143;0.42076438299955043
+a*;levels/blocked_diagonal/3.txt;19;1408;143;0.4884856740000032
+a*;levels/blocked_diagonal/4.txt;19;1405;143;0.4815330459996403

@@ -1,0 +1,8 @@
+[
+    {
+        "group": "h3",
+        "algorithms": ["a*", "greedy"],
+        "levels": ["levels/base/1.txt", "levels/base/2.txt", "levels/base/3.txt", "levels/base/4.txt", "levels/blocked_diagonal/1.txt", "levels/blocked_diagonal/2.txt", "levels/blocked_diagonal/3.txt", "levels/blocked_diagonal/4.txt", "levels/diagonal/1.txt", "levels/diagonal/2.txt", "levels/diagonal/3.txt", "levels/diagonal/4.txt", "levels/more_space_15/1.txt", "levels/more_space_15/2.txt", "levels/more_space_15/3.txt", "levels/more_space_15/4.txt", "levels/pathway/1.txt", "levels/pathway/2.txt", "levels/pathway/3.txt", "levels/pathway/4.txt", "levels/scattered/1.txt", "levels/scattered/2.txt", "levels/scattered/3.txt", "levels/scattered/4.txt", "levels/walls_3/1.txt", "levels/walls_3/2.txt", "levels/walls_3/3.txt", "levels/walls_3/4.txt"],
+        "limit": 500
+    }
+]

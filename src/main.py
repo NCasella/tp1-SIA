@@ -4,7 +4,10 @@ from sokoban import Sokoban, SokobanState
 from search_methods import *
 import numpy as np 
 
+global sokoban
+
 def h1(node:Node):
+        global sokoban
         sum=0
         for boxes_positions in node.state.boxes_positions:
             distances=[]
@@ -22,42 +25,47 @@ def h2(node:Node):
     return sum
 
 
-def pathfinding_recursive(matrix, x, y, counter):
+from collections import deque
 
-    if x < 0 or x > len(matrix) or y < 0 or y > len(matrix[x]):
-        return 99999999999999
-
-    if matrix[x][y] == '.':
-        return counter
+def find_shortest_path(matrix, objectives, x, y, sum):
+    queue = [(x, y, sum)]
+    visited = set()
     
-    sum = 99999999999
-    matrix[x][y] = 'x'
-
-    if (matrix[x-1][y-1] != 'x' or matrix[x-1][y-1] != '#'):
-        sum = min(sum, pathfinding_recursive(matrix, x-1, y-1, counter + 1))
-    if (matrix[x-1][y] != 'x' or matrix[x-1][y] != '#'):
-        sum = min(sum, pathfinding_recursive(matrix, x-1, y, counter + 1))
-    if (matrix[x-1][y+1] != 'x' or matrix[x-1][y+1] != '#'):
-        sum = min(sum, pathfinding_recursive(matrix, x-1, y+1, counter + 1))
-    if (matrix[x][y-1] != 'x' or matrix[x][y-1] != '#'):
-        sum = min(sum, pathfinding_recursive(matrix, x, y-1, counter + 1))
-    if (matrix[x][y+1] != 'x' or matrix[x][y+1] != '#'):
-        sum = min(sum, pathfinding_recursive(matrix, x, y+1, counter + 1))
-    if (matrix[x+1][y-1] != 'x' or matrix[x+1][y-1] != '#'):
-        sum = min(sum, pathfinding_recursive(matrix, x+1, y-1, counter + 1))
-    if (matrix[x+1][y] != 'x' or matrix[x+1][y] != '#'):
-        sum = min(sum, pathfinding_recursive(matrix, x+1, y, counter + 1))
-    if (matrix[x+1][y+1] != 'x' or matrix[x+1][y+1] != '#'):
-        sum = min(sum, pathfinding_recursive(matrix, x+1, y+1, counter + 1))
+    while queue:
+        cx, cy, steps = queue.pop(0)
+        
+        if (cx, cy) in visited:
+            continue
+        visited.add((cx, cy))
+        
+        if (cx, cy) in objectives:
+            return steps
+        
+        for nx, ny in [(cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)]:
+            if 0 <= nx < len(matrix) and 0 <= ny < len(matrix[0]) and matrix[nx][ny] != '#' and (nx, ny) not in visited:
+                queue.append((nx, ny, steps + 1))
     
-    return sum
+    return float('inf') 
 
-def h3(node:Node):
-    sum=0
-    for boxes_positions in node.state.boxes_positions:
-        x, y = boxes_positions
-        sum += pathfinding_recursive(node.state.matrix, x, y, 0)
-    return sum
+
+def h3(node):
+    global sokoban
+    total_sum = 0
+    objectives = set(sokoban.objective_positions)
+    for box in node.state.boxes_positions:
+        x, y = box
+        total_sum += find_shortest_path(node.state.matrix, objectives, x, y, 0)
+    return total_sum
+
+
+def h3(node):
+    global sokoban
+    total_sum = 0
+    objectives = set(sokoban.objective_positions) 
+    for box in node.state.boxes_positions:
+        x, y = box
+        total_sum += find_shortest_path(node.state.matrix, objectives, x, y, 0)
+    return total_sum
 
 
 algorithm_map = {
@@ -99,11 +107,12 @@ def run(config_path):
     parser = TxtToMatrixParser(filepath)
     matrix = parser.txt_to_matrix()
 
+    global sokoban
     sokoban = Sokoban(matrix)
 
 
     if params["algorithm"]=="a*" or params["algorithm"]=="greedy":
-        result:Result = algorithm_map[params["algorithm"]](sokoban,h1)
+        result:Result = algorithm_map[params["algorithm"]](sokoban, h1)
     elif params["algorithm"]=="dfs":
         result:Result=algorithm_map[params["algorithm"]](sokoban,params["limit"])
     else:
@@ -136,6 +145,7 @@ def run_with_params(algorithm, heuristic, limit, filepath):
     parser = TxtToMatrixParser(filepath)
     matrix = parser.txt_to_matrix()
     
+    global sokoban
     sokoban = Sokoban(matrix)
 
     if algorithm=="a*" or algorithm=="greedy":
@@ -173,6 +183,7 @@ def main():
     parser = TxtToMatrixParser(filepath)
     matrix = parser.txt_to_matrix()
 
+    global sokoban
     sokoban = Sokoban(matrix)
 
 

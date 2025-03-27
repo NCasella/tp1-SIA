@@ -6,18 +6,6 @@
         "limit": 500
     },
     {
-        "group": "more_boxes_4",
-        "algorithms": ["a*", "greedy"],
-        "levels": ["levels/more_boxes_4/1.txt", "levels/more_boxes_4/2.txt", "levels/more_boxes_4/3.txt", "levels/more_boxes_4/4.txt"],
-        "limit": 500
-    },
-    {
-        "group": "more_boxes_7",
-        "algorithms": ["a*", "greedy", "dfs", "bfs"],
-        "levels": ["levels/more_boxes_7/1.txt", "levels/more_boxes_7/2.txt", "levels/more_boxes_7/3.txt", "levels/more_boxes_7/4.txt"],
-        "limit": 500
-    },
-    {
         "group": "blocked_diagonal",
         "algorithms": ["a*", "greedy", "dfs", "bfs"],
         "levels": ["levels/blocked_diagonal/1.txt", "levels/blocked_diagonal/2.txt", "levels/blocked_diagonal/3.txt", "levels/blocked_diagonal/4.txt"],
@@ -51,6 +39,18 @@
         "group": "walls_3",
         "algorithms": ["a*", "greedy", "dfs", "bfs"],
         "levels": ["levels/walls_3/1.txt", "levels/walls_3/2.txt", "levels/walls_3/3.txt", "levels/walls_3/4.txt"],
+        "limit": 500
+    },
+    {
+        "group": "more_boxes_4",
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/more_boxes_4/1.txt", "levels/more_boxes_4/2.txt", "levels/more_boxes_4/3.txt", "levels/more_boxes_4/4.txt"],
+        "limit": 500
+    },
+    {
+        "group": "more_boxes_7",
+        "algorithms": ["a*", "greedy", "dfs", "bfs"],
+        "levels": ["levels/more_boxes_7/1.txt", "levels/more_boxes_7/2.txt", "levels/more_boxes_7/3.txt", "levels/more_boxes_7/4.txt"],
         "limit": 500
     }
 ]

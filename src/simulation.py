@@ -88,7 +88,7 @@ def start_run():
     
     def run_and_store():
         global result
-        result = run("config.json")  # Assign result directly to states
+        result = run("../config.json")  # Assign result directly to states
         event.set()  # Signal that processing is complete
     
     event.clear()  # Reset the event
@@ -138,6 +138,6 @@ else:
 
         pygame.display.flip()
 
-        clock.tick(120)  # limits FPS to 60
+        clock.tick(30)  # limits FPS to 60
 
     pygame.quit()

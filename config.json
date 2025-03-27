@@ -1,5 +1,5 @@
 {
-    "filepath": "../levels/box1.txt",
+    "filepath": "../levels/blocked_diagonal/3.txt",
     "algorithm": "dfs",
-    "limit": 200
+    "limit": 500
 }

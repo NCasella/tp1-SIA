@@ -1,0 +1,17 @@
+Algorithm;Level;Cost;Nodes Expanded;Nodes Frontier;Processing Time (s)
+greedy;levels/diagonal/1.txt;13;108;26;0.012826545999814698
+greedy;levels/diagonal/2.txt;13;101;24;0.011504052999953274
+greedy;levels/diagonal/3.txt;13;112;26;0.011891758000274422
+greedy;levels/diagonal/4.txt;13;97;24;0.013454576999720302
+bfs;levels/diagonal/1.txt;13;2765;484;0.02692215099978057
+bfs;levels/diagonal/2.txt;13;2748;481;0.02608006700029364
+bfs;levels/diagonal/3.txt;13;2769;484;0.032639920999827154
+bfs;levels/diagonal/4.txt;13;2744;481;0.02708006499960902
+a*;levels/diagonal/1.txt;13;210;55;0.04051727900059632
+a*;levels/diagonal/2.txt;13;203;53;0.03973240300001635
+a*;levels/diagonal/3.txt;13;214;55;0.04936098999951355
+a*;levels/diagonal/4.txt;13;199;53;0.034911173000182316
+dfs;levels/diagonal/1.txt;171;48783;191;0.36629136100054893
+dfs;levels/diagonal/2.txt;71;2886;87;0.019077422000009392
+dfs;levels/diagonal/3.txt;55;8611;64;0.05916849200002616
+dfs;levels/diagonal/4.txt;113;27675;133;0.2108700119997593
