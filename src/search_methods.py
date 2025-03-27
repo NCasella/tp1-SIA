@@ -25,6 +25,9 @@ def limited_depth_first_search(problem:Problem,limit:int) -> Result:#STACK
 def breath_first_search(problem:Problem) -> Result:#COLA
     return _general_search(problem=problem,limit=math.inf,collection=deque())
 
+def _check_explored(node: Node, explored_states: dict):
+    return node.state in explored_states and node.depth >= explored_states[node.state] # basically, we check if it is explored and the node is deeper than the saved one (there's a shorter path)
+
 def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node]) -> Result:
     start_time=time.perf_counter()
     node:Node=Node(problem.initial_state)
@@ -41,13 +44,14 @@ def _general_search(problem:Problem,limit:int,collection:list[Node]|deque[Node])
         if node.depth>=limit:
             cutoff=True
             continue
-        if node.state not in explored_states or node.depth < explored_states[node.state]:
-            explored_states[node.state] = node.depth
-            for action in problem.get_actions(node.state):
-                child=node.generate_child_node(problem=problem,action=action)
-                nodes_expanded+=1
-                if child.state not in explored_states or child.depth < explored_states.get(child.state, math.inf):
-                    fr.append(child)
+        if _check_explored(node, explored_states):
+            continue
+        explored_states[node.state] = node.depth
+        for action in problem.get_actions(node.state):
+            child=node.generate_child_node(problem=problem,action=action)
+            nodes_expanded+=1
+            if not _check_explored(child, explored_states):
+                fr.append(child)
         
     end_time=time.perf_counter()
     return Result(success=False,nodes_expanded=nodes_expanded,processing_time=end_time-start_time,limit_reached=cutoff)

@@ -80,9 +80,50 @@ class Sokoban(Problem):
                 matrix_copy=[row.copy() for row in matrix]
                 matrix_copy[position[0]][position[1]]=_PLAYER
                 all_on_objective=True
-                frozen=self._box_is_frozen(matrix_copy,new_box_position,all_on_objective)
-                if (not frozen) or all_on_objective:
+                deadlock=self._is_deadlock_position(matrix_copy,new_box_position,movement)
+                if (not deadlock) or all_on_objective:
                     return True
+        return False
+
+    def _is_deadlock_position(self, matrix, box_position, movement):
+        x, y = box_position
+        dx, dy = movement.value
+        new_pos = (x + dx, y + dy)
+        if not (0 <= new_pos[0] < len(matrix) and 0 <= new_pos[1] < len(matrix[0])):
+            return True
+        if matrix[new_pos[0]][new_pos[1]] == _WALL:
+            return True
+        box_positions = {(i, j) for i in range(len(matrix)) for j in range(len(matrix[i])) if matrix[i][j] == _BOX or matrix[i][j] == _BOX_ON_OBJECTIVE}
+        box_positions.add(new_pos)
+        return (
+            self._is_static_deadlock(matrix, new_pos, box_positions, set()) or
+            self._box_is_frozen(matrix, new_pos, True)
+        )
+
+    def _is_static_deadlock(self, matrix, pos, box_positions, visited):
+        if pos in visited:
+            return True
+        visited.add(pos)
+
+        directions = [Movement.UP, Movement.RIGHT, Movement.DOWN, Movement.LEFT]
+
+        length = len(directions)
+
+        for i in range(length):
+
+            all_directions = [
+                directions[i].value,
+                directions[(i + 1) % length].value,
+                directions[(i + 2) % length].value
+            ]
+
+            all_positions = [(pos[0] + d[0], pos[1] + d[1]) for d in all_directions]
+
+            if all(
+                matrix[x[0]][x[1]] == _WALL or 
+                (x in box_positions and self._is_static_deadlock(matrix, x, box_positions, visited.copy())) for x in all_positions
+            ):
+                return True
         return False
     
     def _box_is_frozen(self,matrix,box_position,all_on_objectives):
@@ -101,7 +142,7 @@ class Sokoban(Problem):
             matrix[box_position[0]][box_position[1]]=_WALL
             return self._box_is_frozen(matrix,(box_position[0]+1,box_position[1]),all_on_objectives)
         return False
-              
+
 
     def _is_frozen_horizontally(self,matrix,box_position,all_on_objectives):
         left_box=matrix[box_position[0]][box_position[1]-1]
